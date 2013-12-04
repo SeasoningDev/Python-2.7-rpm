@@ -5,8 +5,7 @@
 #  Is the resulting package and the installed binary named "python" or
 #  "python2"?
 #WARNING: Commenting out doesn't work.  Last line is what's used.
-#%define config_binsuffix 2.7
-%define config_binsuffix none
+%define config_binsuffix 2.7
 
 #  Build tkinter?  "auto" enables it if /usr/bin/wish exists.
 #WARNING: Commenting out doesn't work.  Last line is what's used.
