@@ -152,22 +152,29 @@ cd /tmp/virtualenv-%{virtualenvversion}/
 $RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} setup.py install
 cd $prevdir
 
+# MAKE FILE LISTS
+rm -f mainpkg.files
+find "$RPM_BUILD_ROOT""%{__prefix}"/%{libdirname}/python%{libvers} -type f |
+        sed "s|^${RPM_BUILD_ROOT}|/|" >mainpkg.files
+find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l |
+        sed "s|^${RPM_BUILD_ROOT}|/|" |
+        grep -v -e '/bin/2to3%{binsuffix}$' |
+        grep -v -e '/bin/pydoc%{binsuffix}$' |
+        grep -v -e '/bin/smtpd.py%{binsuffix}$' |
+        grep -v -e '/bin/idle%{binsuffix}$' >mainpkg.files
+echo %{__prefix}/include/python%{libvers}/pyconfig.h >> mainpkg.files
 
 ########
 #  CLEAN
 ########
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
+rm -f mainpkg.files tools.files
 
 ########
 #  FILES
 ########
-%files
-/usr/local/bin/virtualenv-2.7
-/usr/local/bin/python2.7-config
-/usr/local/bin/virtualenv
-/usr/local/bin/python2.7
-/usr/local/include/python2.7/pyconfig.h
+%files -f mainpkg.files
 %defattr(-,root,root)
 %doc Misc/README Misc/cheatsheet Misc/Porting
 %doc LICENSE Misc/ACKS Misc/HISTORY Misc/NEWS
