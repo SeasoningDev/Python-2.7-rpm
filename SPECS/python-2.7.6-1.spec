@@ -76,6 +76,7 @@ Mac.
 #######
 %prep
 %setup -n Python-%{version}
+tar -xzf $RPM_SOURCE_DIR/virtualenv-1.9.1.tar.gz -C /tmp
 
 ########
 #  BUILD
@@ -142,6 +143,9 @@ chmod 644 $RPM_BUILD_ROOT%{__prefix}/%{libdirname}/libpython%{libvers}*
 #   exit 1
 #fi
 #rm -f /tmp/python-rpm-files.$$
+
+# Install virtualenv
+$RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} /tmp/virtualenv-1.9/setup.py install
 
 ########
 #  CLEAN
