@@ -151,7 +151,7 @@ cd /tmp/virtualenv-%{virtualenvversion}/
 $RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} setup.py install
 
 # MAKE FILE LISTS
-rm -f mainpkg.files
+rm -f /tmp/mainpkg.files
 find "$RPM_BUILD_ROOT""%{__prefix}"/%{libdirname}/python%{libvers} -type f |
         sed "s|^${RPM_BUILD_ROOT}|/|" | grep -v -e '_tkinter.so$' >mainpkg.files
 find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l |
@@ -160,19 +160,19 @@ find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l |
         grep -v -e '/bin/pydoc%{binsuffix}$' |
         grep -v -e '/bin/smtpd.py%{binsuffix}$' |
         grep -v -e '/bin/idle%{binsuffix}$' >>mainpkg.files
-echo %{__prefix}/include/python%{libvers}/pyconfig.h >> mainpkg.files
+echo %{__prefix}/include/python%{libvers}/pyconfig.h >> /tmp/mainpkg.files
 
 ########
 #  CLEAN
 ########
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
-rm -f mainpkg.files tools.files
+rm -f /tmp/mainpkg.files tools.files
 
 ########
 #  FILES
 ########
-%files -f mainpkg.files
+%files -f /tmp/mainpkg.files
 %defattr(-,root,root)
 %doc Misc/README Misc/cheatsheet Misc/Porting
 %doc LICENSE Misc/ACKS Misc/HISTORY Misc/NEWS
