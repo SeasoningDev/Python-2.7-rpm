@@ -369,6 +369,7 @@ rm -f mainpkg.files tools.files
 %defattr(-,root,root)
 %doc Misc/README Misc/cheatsheet Misc/Porting
 %doc LICENSE Misc/ACKS Misc/HISTORY Misc/NEWS
+%doc %{__prefix}/share/man/man1/python2.7.1
 
 %attr(755,root,root) %dir %{__prefix}/include/python%{libvers}
 %attr(755,root,root) %dir %{__prefix}/lib/python%{libvers}/
