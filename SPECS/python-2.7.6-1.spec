@@ -164,7 +164,7 @@ cd $prevdir
 ########
 %files
 /usr/local/bin/virtualenv-2.7
-/usr/local/bin/python-2.7-config
+/usr/local/bin/python2.7-config
 /usr/local/bin/virtualenv
 /usr/local/bin/python2.7
 /usr/local/include/python2.7/pyconfig.h
