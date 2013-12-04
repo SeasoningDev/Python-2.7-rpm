@@ -156,8 +156,6 @@ cd $prevdir
 rm -f mainpkg.files
 pwd
 echo $RPM_BUILD_ROOT
-find "$RPM_BUILD_ROOT""%{__prefix}"/%{libdirname}/python%{libvers} -type f |
-        sed "s|^${RPM_BUILD_ROOT}|/|" >mainpkg.files
 find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l |
         sed "s|^${RPM_BUILD_ROOT}|/|" |
         grep -v -e '/bin/2to3%{binsuffix}$' |
@@ -171,12 +169,12 @@ echo %{__prefix}/include/python%{libvers}/pyconfig.h >> mainpkg.files
 ########
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
-rm -f mainpkg.files tools.files
+rm -f mainpkg.files
 
 ########
 #  FILES
 ########
-%files -f mainpkg.files
+%files
 %defattr(-,root,root)
 %doc Misc/README Misc/cheatsheet Misc/Porting
 %doc LICENSE Misc/ACKS Misc/HISTORY Misc/NEWS
