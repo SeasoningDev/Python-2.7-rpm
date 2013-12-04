@@ -147,8 +147,10 @@ chmod 644 $RPM_BUILD_ROOT%{__prefix}/%{libdirname}/libpython%{libvers}*
 #rm -f /tmp/python-rpm-files.$$
 
 # Install virtualenv
+prevdir=`pwd`
 cd /tmp/virtualenv-%{virtualenvversion}/
 $RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} setup.py install
+cd $prevdir
 
 # MAKE FILE LISTS
 rm -f /tmp/mainpkg.files
