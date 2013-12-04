@@ -154,8 +154,14 @@ cd $prevdir
 
 # MAKE FILE LISTS
 rm -f mainpkg.files
-find "$RPM_BUILD_ROOT""%{__prefix}"/%{libdirname}/python%{libvers} -type f >mainpkg.files
-find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l >>mainpkg.files
+find "$RPM_BUILD_ROOT""%{__prefix}"/%{libdirname}/python%{libvers} -type f |
+        sed "s|^${RPM_BUILD_ROOT}||" >mainpkg.files
+find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l |
+        sed "s|^${RPM_BUILD_ROOT}||" |
+        grep -v -e '/bin/2to3%{binsuffix}$' |
+        grep -v -e '/bin/pydoc%{binsuffix}$' |
+        grep -v -e '/bin/smtpd.py%{binsuffix}$' |
+        grep -v -e '/bin/idle%{binsuffix}$' >>mainpkg.files
 echo %{__prefix}/include/python%{libvers}/pyconfig.h >> mainpkg.files
 
 ########
