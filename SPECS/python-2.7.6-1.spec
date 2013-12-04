@@ -154,6 +154,8 @@ cd $prevdir
 
 # MAKE FILE LISTS
 rm -f mainpkg.files
+pwd
+echo $RPM_BUILD_ROOT
 find "$RPM_BUILD_ROOT""%{__prefix}"/%{libdirname}/python%{libvers} -type f |
         sed "s|^${RPM_BUILD_ROOT}|/|" >mainpkg.files
 find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l |
