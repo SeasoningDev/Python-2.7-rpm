@@ -42,7 +42,7 @@
 
 %define name python27
 #--start constants--
-%define version 2.7.6
+%define version 2.7.6rc1
 %define libvers 2.7
 #--end constants--
 %define release 1
