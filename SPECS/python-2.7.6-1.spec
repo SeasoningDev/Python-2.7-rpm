@@ -152,18 +152,6 @@ cd /tmp/virtualenv-%{virtualenvversion}/
 $RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} setup.py install
 cd $prevdir
 
-# MAKE FILE LISTS
-rm -f mainpkg.files
-pwd
-echo $RPM_BUILD_ROOT
-find "$RPM_BUILD_ROOT""%{__prefix}"/bin -type f -o -type l |
-        sed "s|^${RPM_BUILD_ROOT}|/|" |
-        grep -v -e '/bin/2to3%{binsuffix}$' |
-        grep -v -e '/bin/pydoc%{binsuffix}$' |
-        grep -v -e '/bin/smtpd.py%{binsuffix}$' |
-        grep -v -e '/bin/idle%{binsuffix}$' >>mainpkg.files
-echo %{__prefix}/include/python%{libvers}/pyconfig.h >> mainpkg.files
-
 ########
 #  CLEAN
 ########
@@ -175,10 +163,7 @@ rm -f mainpkg.files
 #  FILES
 ########
 %files
-%defattr(-,root,root)
-%doc Misc/README Misc/cheatsheet Misc/Porting
-%doc LICENSE Misc/ACKS Misc/HISTORY Misc/NEWS
-%doc %{__prefix}/share/man/man1/python2.7.1
+/usr
 
 %attr(755,root,root) %dir %{__prefix}/include/python%{libvers}
 %attr(755,root,root) %dir %{__prefix}/lib/python%{libvers}/
