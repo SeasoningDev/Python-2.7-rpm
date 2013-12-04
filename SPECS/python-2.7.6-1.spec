@@ -50,9 +50,6 @@ Release: %{release}
 License: PSF
 Group: Development/Languages
 Source: Python-%{version}.tar.bz2
-%if %{include_docs}
-Source1: %{name}-%{version}-docs-html.tar.bz2
-%endif
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 BuildRequires: gcc make expat-devel db4-devel gdbm-devel sqlite-devel readline-devel zlib-devel bzip2-devel openssl-devel
 AutoReq: no
