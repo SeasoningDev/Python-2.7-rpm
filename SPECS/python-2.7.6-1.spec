@@ -32,6 +32,7 @@
 #--start constants--
 %define version 2.7.6rc1
 %define libvers 2.7
+%define virtualenvversion 1.9.1
 #--end constants--
 %define release 1
 %define __prefix /usr/local
@@ -76,7 +77,8 @@ Mac.
 #######
 %prep
 %setup -n Python-%{version}
-tar -xzf $RPM_SOURCE_DIR/virtualenv-1.9.1.tar.gz -C /tmp
+rm -rf /tmp/virtualenv-%{virtualenvversion}
+tar -xzf $RPM_SOURCE_DIR/virtualenv-%{virtualenvversion}.tar.gz -C /tmp
 
 ########
 #  BUILD
@@ -145,7 +147,7 @@ chmod 644 $RPM_BUILD_ROOT%{__prefix}/%{libdirname}/libpython%{libvers}*
 #rm -f /tmp/python-rpm-files.$$
 
 # Install virtualenv
-$RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} /tmp/virtualenv-1.9/setup.py install
+$RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} /tmp/virtualenv-%{virtualenvversion}/setup.py install
 
 # MAKE FILE LISTS
 rm -f mainpkg.files
