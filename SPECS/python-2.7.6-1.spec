@@ -102,6 +102,14 @@ echo 'install_dir='"${RPM_BUILD_ROOT}%{__prefix}/bin" >>setup.cfg
 mkdir -p $RPM_BUILD_ROOT%{__prefix}/%{libdirname}/python%{libvers}/lib-dynload
 make prefix=$RPM_BUILD_ROOT%{__prefix} altinstall
 
+
+# Install virtualenv
+prevdir=`pwd`
+cd /tmp/virtualenv-%{virtualenvversion}/
+$RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} setup.py install
+cd $prevdir
+
+
 #  REPLACE PATH IN PYDOC
 if [ ! -z "%{binsuffix}" ]
 then
@@ -146,25 +154,15 @@ chmod 644 $RPM_BUILD_ROOT%{__prefix}/%{libdirname}/libpython%{libvers}*
 #fi
 #rm -f /tmp/python-rpm-files.$$
 
-# Install virtualenv
-prevdir=`pwd`
-cd /tmp/virtualenv-%{virtualenvversion}/
-$RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} setup.py install
-cd $prevdir
 
 ########
 #  CLEAN
 ########
 %clean
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
-rm -f mainpkg.files
 
 ########
 #  FILES
 ########
 %files
 /usr
-
-%attr(755,root,root) %dir %{__prefix}/include/python%{libvers}
-%attr(755,root,root) %dir %{__prefix}/lib/python%{libvers}/
-%attr(755,root,root) %dir %{__prefix}/%{libdirname}/python%{libvers}/
