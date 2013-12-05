@@ -110,19 +110,8 @@ $RPM_BUILD_ROOT%{__prefix}/bin/python%{binsuffix} setup.py install
 cd $prevdir
 
 
-#  REPLACE PATH IN PYDOC
-if [ ! -z "%{binsuffix}" ]
-then
-   (
-      cd $RPM_BUILD_ROOT%{__prefix}/bin
-      mv pydoc pydoc.old
-      sed 's|#!.*|#!%{__prefix}/bin/python'%{binsuffix}'|' \
-            pydoc.old >pydoc
-      chmod 755 pydoc
-      rm -f pydoc.old
-      sed -i -e 's|#!.*|#!%{__prefix}/bin/python'%{binsuffix}'|' python%{libvers}-config
-   )
-fi
+# Replace paths to buildroot in any files by an absolute path
+perl -e "s#%{buildroot}##g;" -pi $(find %{buildroot} -type f)
 
 #  add the binsuffix
 if [ ! -z "%{binsuffix}" ]
